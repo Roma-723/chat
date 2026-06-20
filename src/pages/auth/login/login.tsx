@@ -33,7 +33,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex mt-30 items-center justify-center px-4">
+        <div className="flex pt-30 items-center justify-center px-4 fixed t-0 w-full h-full bg-white">
             <div className="w-full max-w-md bg-white p-8 shadow-2xl rounded-2xl border border-gray-100">
 
                 <h2 className="text-center text-3xl font-extrabold text-gray-800 mb-8">
@@ -51,7 +51,7 @@ const Login = () => {
                             placeholder="Name"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
-                            className={`w-full px-4 py-2.5 border rounded-lg outline-none transition duration-200 focus:ring-2 focus:ring-blue-100 ${
+                            className={`w-full px-4 py-2.5 border rounded-lg text-black outline-none transition duration-200 focus:ring-2 focus:ring-blue-100 ${
                                 isInvalid(fullName)
                                     ? 'border-red-500 focus:border-red-500'
                                     : 'border-gray-300 focus:border-blue-500'
@@ -73,7 +73,7 @@ const Login = () => {
                                 placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className={`w-full px-4 py-2.5 border rounded-lg outline-none transition duration-200 focus:ring-2 focus:ring-blue-100 pr-11 ${
+                                className={`w-full px-4 py-2.5 border text-black rounded-lg outline-none transition duration-200 focus:ring-2 focus:ring-blue-100 pr-11 ${
                                     isInvalid(password) ? 'border-red-500 focus:border-red-500' : 'border-gray-300 focus:border-blue-500'
                                 }`}
                             />

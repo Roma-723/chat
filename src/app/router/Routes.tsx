@@ -5,6 +5,8 @@ const Home = lazy(() => import("../../pages/home/home"))
 const Layout = lazy(() => import("../../app/layout/layout"))
 const Login = lazy(() => import("../../pages/auth/login/login"))
 const Signup = lazy(() => import("../../pages/auth/signup/signup"));
+const ProtectedRoute = lazy(() => import("../../shared/components/ProtectedRoute"));
+
 const Routes = () => {
   const router = createBrowserRouter([
     {
@@ -12,8 +14,13 @@ const Routes = () => {
       path: "/",
       children: [
         {
-          index: true,
-          element: <Home />
+          element: <ProtectedRoute />,
+          children: [
+            {
+              index: true,
+              element: <Home />
+            }
+          ]
         },
         {
           path: "login",
@@ -25,7 +32,7 @@ const Routes = () => {
         }
       ]
     }
-    
+
   ])
 
   return <RouterProvider router={router} />
