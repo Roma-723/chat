@@ -31,7 +31,6 @@ const Login = () => {
         dispatch(loginUser({ username: fullName, password }));
          
     };
-
     return (
         <div className="flex pt-30 items-center justify-center px-4 fixed t-0 w-full h-full bg-white">
             <div className="w-full max-w-md bg-white p-8 shadow-2xl rounded-2xl border border-gray-100">
