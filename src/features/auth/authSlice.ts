@@ -11,7 +11,6 @@ interface AuthState {
     error: string | null;
 }
 
-
 const initialState: AuthState = {
     token: localStorage.getItem("token"),
     status: "idle", 
