@@ -35,7 +35,7 @@ export const chatSlice = createSlice({
             })
             .addCase(getByIdChats.pending, (state) => {
                 state.loading = true
-                state.currentChat = []  
+                state.currentChat = []
             })
             .addCase(getByIdChats.fulfilled, (state, action) => {
                 state.currentChat = action.payload ?? []

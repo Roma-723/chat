@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, memo } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getByIdChats, getChats } from "../../api/chat/chat"
 import { useNavigate } from "react-router-dom"
@@ -9,7 +9,7 @@ const COLORS = [
   "#2996ad", "#ce671b",
 ]
 
-const Avatar = ({ url, username, index }: { url: string | null; username: string; index: number }) => {
+const Avatar = memo(({ url, username, index }: { url: string | null; username: string; index: number }) => {
   const [error, setError] = useState(false)
 
   if (url && !error) {
@@ -31,9 +31,24 @@ const Avatar = ({ url, username, index }: { url: string | null; username: string
       {username?.[0]?.toUpperCase()}
     </div>
   )
-}
+})
 
-const Leftbar = () => {
+const ChatItem = memo(({ chat, index, onClick }: { chat: any; index: number; onClick: () => void }) => (
+  <div
+    onClick={onClick}
+    className="flex items-center gap-3 px-3 py-2 hover:bg-white/5 cursor-pointer transition-colors rounded-xl mx-1"
+  >
+    <Avatar url={chat.avatar_url} username={chat.username} index={index} />
+    <div className="flex-1 min-w-0">
+      <p className="text-sm font-medium truncate">{chat.username}</p>
+      <p className="text-[13px] text-gray-400 truncate mt-0.5">
+        {chat.last_message || "no message"}
+      </p>
+    </div>
+  </div>
+))
+
+const Leftbar = memo(() => {
   const dispatch = useDispatch<any>()
   const navigate = useNavigate()
   const { chats, loading } = useSelector((state: any) => state.chat)
@@ -75,29 +90,21 @@ const Leftbar = () => {
             <p className="text-center text-gray-500 mt-10 text-sm">no message</p>
           ) : (
             filtered?.map((chat: any, i: number) => (
-              <div
+              <ChatItem
                 key={chat.id}
+                chat={chat}
+                index={i}
                 onClick={() => {
                   dispatch(getByIdChats(chat.id))
                   navigate(`/chat/${chat.id}`)
                 }}
-                className="flex items-center gap-3 px-3 py-2 hover:bg-white/5 cursor-pointer transition-colors rounded-xl mx-1"
-              >
-                <Avatar url={chat.avatar_url} username={chat.username} index={i} />
-
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{chat.username}</p>
-                  <p className="text-[13px] text-gray-400 truncate mt-0.5">
-                    {chat.last_message || "no message"}
-                  </p>
-                </div>
-              </div>
+              />
             ))
           )}
         </div>
       </div>
     </div>
   )
-}
+})
 
 export default Leftbar
