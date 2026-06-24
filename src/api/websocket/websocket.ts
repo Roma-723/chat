@@ -11,6 +11,7 @@ export const connectWebSocket = () => {
     const token = localStorage.getItem("token")
     if (!token) return
 
+
     
     isConnecting = true
     ws = new WebSocket(`ws://localhost:8000/messages/ws?token=${token}`)
