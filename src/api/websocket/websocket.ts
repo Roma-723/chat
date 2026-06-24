@@ -15,6 +15,7 @@ export const connectWebSocket = () => {
 
 
 
+
     
     isConnecting = true
     ws = new WebSocket(`ws://localhost:8000/messages/ws?token=${token}`)
