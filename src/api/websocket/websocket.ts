@@ -20,7 +20,7 @@ export const connectWebSocket = () => {
 
     ws.onmessage = (event) => {
         const data = JSON.parse(event.data)
-
+        
         if (data.type === "message") {
             store.dispatch(addMessage({
                 message_id: data.id,
