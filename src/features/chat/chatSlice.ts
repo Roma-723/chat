@@ -19,7 +19,11 @@ const initialState: CounterState = {
 export const chatSlice = createSlice({
     name: 'chat',
     initialState,
-    reducers: {},
+     reducers: {
+        addMessage: (state, action) => {
+            state.currentChat.unshift(action.payload)
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getChats.pending, (state) => {
@@ -48,3 +52,4 @@ export const chatSlice = createSlice({
 })
 
 export default chatSlice.reducer
+export const { addMessage } = chatSlice.actions
