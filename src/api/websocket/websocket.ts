@@ -3,7 +3,6 @@ import { addMessage } from "../../features/chat/chatSlice"
 
 let ws: WebSocket | null = null
 let isConnecting = false
-
 export const connectWebSocket = () => {
     if (ws?.readyState === WebSocket.OPEN) {
         console.log("✅ WS already open, skip")
