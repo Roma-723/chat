@@ -5,31 +5,36 @@ let ws: WebSocket | null = null
 let isConnecting = false
 
 export const connectWebSocket = () => {
+    // Агар аллакай open ё connecting бошад — чизе накун
+    if (ws?.readyState === WebSocket.OPEN) {
+        console.log("✅ WS already open, skip")
+        return
+    }
+    if (ws?.readyState === WebSocket.CONNECTING) {
+        console.log("⏳ WS already connecting, skip")
+        return
+    }
     if (isConnecting) return
-    if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return
 
     const token = localStorage.getItem("token")
-    if (!token) return
+    if (!token) {
+        console.warn("⚠️ No token found")
+        return
+    }
 
-
-
-
-
-
-
-
-
-   
-    
     isConnecting = true
+    console.log("🔌 Connecting WebSocket...")
+    
     ws = new WebSocket(`ws://localhost:8000/messages/ws?token=${token}`)
 
     ws.onopen = () => {
         isConnecting = false
+        console.log("✅ WebSocket connected")
     }
 
     ws.onmessage = (event) => {
         const data = JSON.parse(event.data)
+        console.log("📨 WS message:", data)
 
         if (data.type === "message") {
             store.dispatch(addMessage({
@@ -42,19 +47,36 @@ export const connectWebSocket = () => {
         }
     }
 
-    ws.onerror = () => {
+    ws.onerror = (err) => {
+        console.error("❌ WS error:", err)
         isConnecting = false
         ws = null
     }
 
-    ws.onclose = null
+    ws.onclose = (event) => {
+        console.log("🔌 WS closed:", event.code, event.reason)
+        isConnecting = false
+        ws = null
+    }
+}
+
+export const sendMessageWebSocket = (data: string) => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(data)
+        console.log("📤 Sent:", data)
+    } else {
+        console.warn("⚠️ WS not open, readyState:", ws?.readyState)
+    }
 }
 
 export const disconnectWebSocket = () => {
     if (ws) {
         ws.onclose = null
+        ws.onerror = null
         ws.close()
         ws = null
     }
     isConnecting = false
 }
+
+export const getWsState = () => ws?.readyState

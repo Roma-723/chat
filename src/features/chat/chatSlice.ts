@@ -5,12 +5,14 @@ import { getByIdChats, getChats } from '../../api/chat/chat'
 export interface CounterState {
     chats: IData[]
     loading: boolean
+    socket: string
     currentChat: Messanges[]
     error: string | null
 }
 
 const initialState: CounterState = {
     chats: [],
+    socket: "",
     loading: false,
     currentChat: [],
     error: null

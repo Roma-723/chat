@@ -23,12 +23,12 @@ export const getByIdChats = createAsyncThunk("user/getByIdChats",
     }
 )
 
-export const sendMessage = createAsyncThunk("user/sendMessage",
-    async (params: any) => {
-        try {
-            await axiosRequest.post("messages/send", params)
-        } catch (error) {
-            console.error(error);
-        }
-    }
-)
+// export const sendMessage = createAsyncThunk("user/sendMessage",
+//     async (params: any) => {
+//         try {
+//             await axiosRequest.post("messages/send", params)
+//         } catch (error) {
+//             console.error(error);
+//         }
+//     }
+// )

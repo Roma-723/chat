@@ -1,9 +1,10 @@
+// Chats.tsx
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { jwtDecode } from "jwt-decode"
-import { getByIdChats, sendMessage } from "../../api/chat/chat"
-import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocket"
+import { getByIdChats } from "../../api/chat/chat"
+import { connectWebSocket, sendMessageWebSocket } from "../../api/websocket/websocket"
 import type { Messanges } from "../../shared/types/chatType"
 
 const formatTime = (created_at: string) => {
@@ -33,24 +34,29 @@ const Chats = () => {
   useEffect(() => {
     if (id) dispatch(getByIdChats(Number(id)))
     connectWebSocket()
-    return () => {
-      disconnectWebSocket()
-    }
   }, [id])
 
-  const handleSend = async () => {
+  const handleSend = () => {
     if (!text.trim()) return
+    const tempId = Date.now() + Math.random()
+    sendMessageWebSocket(JSON.stringify({
+      type: "message",
+      sender_id: myId,
+      receiver_id: Number(id),
+      tempId: tempId,
+      message: text
+    }))
     setText("")
-    await dispatch(sendMessage({ receiver_id: Number(id), message: text }))
   }
 
   return (
     <div className="flex flex-col w-full h-full bg-[#212121]">
-      <div className="w-full h-15 bg-neutral-800">
-        
-      </div>
-      <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-1">
-        {[...currentChat].reverse().map((e: Messanges) => {
+      {/* Header */}
+      <div className="w-full h-15 bg-neutral-800" />
+
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col-reverse gap-1">
+        {currentChat.map((e: Messanges) => {
           const isMe = e.sender_id === myId
           return (
             <div key={e.message_id} className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
@@ -69,6 +75,7 @@ const Chats = () => {
         })}
       </div>
 
+      {/* Input */}
       <div className="px-4 py-3 border-t border-white/5 flex items-center gap-2 bg-[#212121]">
         <input
           type="text"
