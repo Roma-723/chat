@@ -66,7 +66,6 @@ export const sendMessageWebSocket = (data: string) => {
         console.warn("⚠️ WS not open, readyState:", ws?.readyState)
     }
 }
-
 export const disconnectWebSocket = () => {
     if (ws) {
         ws.onclose = null
