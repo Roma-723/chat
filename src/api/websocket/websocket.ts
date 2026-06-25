@@ -20,7 +20,6 @@ export const connectWebSocket = () => {
         console.warn("⚠️ No token found")
         return
     }
-
     isConnecting = true
     console.log("🔌 Connecting WebSocket...")
     
