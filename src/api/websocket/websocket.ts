@@ -67,7 +67,6 @@ export const sendMessageWebSocket = (data: string) => {
     }
 }
 
-
 export const disconnectWebSocket = () => {
     if (ws) {
         ws.onclose = null
