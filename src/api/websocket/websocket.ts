@@ -5,7 +5,6 @@ let ws: WebSocket | null = null
 let isConnecting = false
 
 export const connectWebSocket = () => {
-    // Агар аллакай open ё connecting бошад — чизе накун
     if (ws?.readyState === WebSocket.OPEN) {
         console.log("✅ WS already open, skip")
         return
