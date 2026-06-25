@@ -1,6 +1,5 @@
 import { store } from "../../store/store"
 import { addMessage } from "../../features/chat/chatSlice"
-
 let ws: WebSocket | null = null
 let isConnecting = false
 export const connectWebSocket = () => {
