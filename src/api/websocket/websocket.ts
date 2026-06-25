@@ -44,7 +44,6 @@ export const connectWebSocket = () => {
             }))
         }
     }
-
     ws.onerror = (err) => {
         console.error("❌ WS error:", err)
         isConnecting = false
