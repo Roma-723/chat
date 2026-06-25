@@ -28,7 +28,6 @@ export const connectWebSocket = () => {
 
     ws.onopen = () => {
         isConnecting = false
-        console.log("✅ WebSocket connected")
     }
 
     ws.onmessage = (event) => {
