@@ -29,7 +29,6 @@ export const connectWebSocket = () => {
     ws.onopen = () => {
         isConnecting = false
     }
-
     ws.onmessage = (event) => {
         const data = JSON.parse(event.data)
         console.log("📨 WS message:", data)
