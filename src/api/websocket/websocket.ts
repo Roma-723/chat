@@ -49,7 +49,6 @@ export const connectWebSocket = () => {
         isConnecting = false
         ws = null
     }
-
     ws.onclose = (event) => {
         console.log("🔌 WS closed:", event.code, event.reason)
         isConnecting = false
